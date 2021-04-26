@@ -32,6 +32,7 @@ var (
 		"com.ericsson.bss.cassandra.ecaudit.auth.AuditPasswordAuthenticator",
 		"com.amazon.helenus.auth.HelenusAuthenticator",
 		"com.ericsson.bss.cassandra.ecaudit.auth.AuditAuthenticator",
+		"org.apache.cassandra.auth.SaslauthdAuthenticator",
 	}
 )
 
@@ -66,7 +67,7 @@ type PasswordAuthenticator struct {
 
 func (p PasswordAuthenticator) Challenge(req []byte) ([]byte, Authenticator, error) {
 	if !approve(string(req)) {
-		return nil, nil, fmt.Errorf("unexpected authenticator %q", req)
+		return nil, nil, fmt.Errorf("amos unexpected authenticator %q", req)
 	}
 	resp := make([]byte, 2+len(p.Username)+len(p.Password))
 	resp[0] = 0
